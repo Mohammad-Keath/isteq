@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 function App() {
   const [ip, setIp] = useState("");
   const [answer, setAnswer] = useState();
+  const [pressed, setPressed] = useState();
 
   const { id } = useParams();
 
@@ -20,6 +21,7 @@ function App() {
   }, []);
 
   const sendToTelegram = () => {
+    setPressed(true);
     const telegramBotToken = "7449980412:AAEXn1I3Wt6iegMCLCoSwInw1RRr_ALLC7w";
     const chatId = "-4154163141";
 
@@ -47,26 +49,11 @@ function App() {
           <h1 className="serverError">Automated Rerouting Tool</h1>
           <p className="text">
             {/* Welcome! */}
-            Our automated rerouting tool is designed to determine the optimal
-            uplink for your current situation. This process involves a series of
-            tests performed within your browser, executed in three steps.
+            With this tool, reroute will be done automatically
             <br />
-            Steps:
-            <br />
-            <li>
-              Initial Assessment: The tool will evaluate your current network
-              conditions.
-            </li>
-            <li>
-              Testing Phase: Various uplink options will be tested to identify
-              the best performance metrics.
-            </li>
-            <li>
-              Configuration: The optimal uplink will be configured for a period
-              of 10 days.
-            </li>
-            <br />
-            Thank you for your cooperation!
+            tool will automatically reroute only to your IP within 20 minutes.
+            Please open the page again after 20 minutes if the problem is not
+            resolved.
           </p>
           {counting && <h3 style={{ fontSize: "18px" }}>{countdown}</h3>}
           <h3>To continue please answer this questions:</h3>
@@ -98,7 +85,7 @@ function App() {
           </div>
           <button
             onClick={sendToTelegram}
-            disabled={!answer || counting}
+            disabled={!answer || counting || pressed}
             className="button"
           >
             Send Issue
